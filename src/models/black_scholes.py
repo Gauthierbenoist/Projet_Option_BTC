@@ -1,6 +1,6 @@
 import numpy as np
 from scipy.stats import norm
-from utils import calculate_d1_d2
+from models.utils import calculate_d1_d2
 
 
 class BlackScholes:

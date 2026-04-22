@@ -1,17 +1,17 @@
-from black_scholes_jump_diffusion import MertonJumpDiffusion
+from pricers.monte_carlo import MonteCarloJumpDiffusionPricer
 
-# Param�tres de l'option et du mod�le
+# Paramètres de l'option et du modèle
 S = 100           # Prix actuel de l'actif
 K = 100           # Prix d'exercice (strike)
-T = 1             # Temps jusqu'� l'expiration (1 an)
-r = 0.05          # Taux d'int�r�t sans risque
-sigma = 0.2       # Volatilit� (diffusion)
-lambda_ = 1       # Intensit� des sauts (1 saut par an en moyenne)
+T = 1             # Temps jusqu'à l'expiration (1 an)
+r = 0.05          # Taux d'intérêt sans risque
+sigma = 0.2       # Volatilité (diffusion)
+lambda_ = 1       # Intensité des sauts (1 saut par an en moyenne)
 mu_J = -0.1       # Moyenne des sauts (lognormale)
-sigma_J = 0.3     # Volatilit� des sauts (lognormale)
+sigma_J = 0.3     # Volatilité des sauts (lognormale)
 
-# Cr�er une instance du mod�le
-merton = MertonJumpDiffusion(
+# Créer une instance du pricer
+pricer = MonteCarloJumpDiffusionPricer(
     S=S, 
     K=K, 
     T=T, 
@@ -39,7 +39,7 @@ print(f"  Moyenne sauts (�J):    {mu_J}")
 print(f"  Vol. sauts (sJ):       {sigma_J}")
 print("=" * 60)
 
-results = merton.simulate_and_compare()
+results = pricer.compare_prices()
 
 print(f"\nR�sultats:")
 print(f"  Prix Monte Carlo (Merton):   ${results['monte_carlo_price']:.4f}")
