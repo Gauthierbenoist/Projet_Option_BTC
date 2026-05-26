@@ -1,0 +1,8 @@
+# Préférer le script d'installation :
+#   bash data/scripts/install_linux_cron.sh
+#
+# Ou entrée manuelle (00:15 chaque jour) :
+# 15 0 * * * cd /chemin/vers/Projets\ python && \
+#   /chemin/vers/.venv/bin/python data/scripts/run_daily_pipeline.py --scheduled >> data/logs/scheduler.log 2>&1 # deribit-btc-options-etl
+#
+# Windows : .\data\scripts\install_windows_scheduler.ps1

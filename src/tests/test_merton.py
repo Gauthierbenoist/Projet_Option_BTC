@@ -1,4 +1,5 @@
 from pricers.monte_carlo import MonteCarloJumpDiffusionPricer
+import time
 
 # Paramètres de l'option et du modèle
 S = 100           # Prix actuel de l'actif
@@ -20,7 +21,7 @@ pricer = MonteCarloJumpDiffusionPricer(
     lambda_=lambda_, 
     mu_J=mu_J, 
     sigma_J=sigma_J,
-    num_simulations=100,
+    num_simulations=100000,
     num_steps=252
 )
 
@@ -39,11 +40,14 @@ print(f"  Moyenne sauts (�J):    {mu_J}")
 print(f"  Vol. sauts (sJ):       {sigma_J}")
 print("=" * 60)
 
+start_time = time.time()
 results = pricer.compare_prices()
+elapsed_time = time.time() - start_time
 
-print(f"\nR�sultats:")
+print(f"\nRésultats:")
 print(f"  Prix Monte Carlo (Merton):   ${results['monte_carlo_price']:.4f}")
 print(f"  Prix Black-Scholes:          ${results['black_scholes_price']:.4f}")
-print(f"  Diff�rence:                  ${results['difference']:.4f}")
-print(f"  �cart relatif:               {(results['difference'] / results['black_scholes_price'] * 100):.2f}%")
+print(f"  Différence:                  ${results['difference']:.4f}")
+print(f"  Écart relatif:               {(results['difference'] / results['black_scholes_price'] * 100):.2f}%")
+print(f"  Temps de calcul:             {elapsed_time:.2f}s")
 print("=" * 60)

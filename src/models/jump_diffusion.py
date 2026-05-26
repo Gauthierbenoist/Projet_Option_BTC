@@ -64,8 +64,8 @@ class MertonJumpDiffusion:
                 if num_jumps[i] > 0:
                     # Taille des sauts lognormaux
                     jumps = np.random.lognormal(self.mu_J, self.sigma_J, num_jumps[i])
-                    # Produit des sauts (multiplicatif)
-                    jump_sizes[i] = np.prod(jumps) - 1
+                    # Somme des logarithmes des sauts (à mettre dans l'exponentielle)
+                    jump_sizes[i] = np.sum(np.log(jumps))
 
             # Evolution du prix
             paths[:, t] = paths[:, t-1] * np.exp(drift_adjusted + diffusion + jump_sizes)

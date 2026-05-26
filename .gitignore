@@ -25,6 +25,23 @@ Thumbs.db
 # Logs
 *.log
 logs/
+data/logs/*.log
+data/logs/last_run.json
+
+# Données Deribit locales (volumineuses — conserver la structure via .gitkeep)
+data/raw/**/*.json
+data/cleaned/*.csv
+data/fomc_statements_*.csv
+!data/raw/.gitkeep
+!data/cleaned/.gitkeep
+
+# Historique local / RDS (ne pas versionner)
+src/data/*.csv
+src/data/*.rds
+src/data/*.r
+
+# Secrets
+.env
 
 # Temporary files
 *.tmp

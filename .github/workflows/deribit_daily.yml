@@ -1,0 +1,73 @@
+# Pipeline Deribit BTC options — exécution quotidienne sur GitHub (PC éteint)
+name: Deribit BTC Options Daily
+
+on:
+  schedule:
+    # 00:15 UTC chaque jour (après roll Deribit)
+    - cron: "15 0 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: deribit-daily
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  etl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    env:
+      DERIBIT_DATA_DIR: ${{ github.workspace }}/data/github
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run ETL (sans PostgreSQL)
+        if: ${{ secrets.POSTGRES_PASSWORD == '' }}
+        run: python data/scripts/run_daily_pipeline.py --scheduled --skip-db
+
+      - name: Run ETL (avec PostgreSQL)
+        if: ${{ secrets.POSTGRES_PASSWORD != '' }}
+        run: python data/scripts/run_daily_pipeline.py --scheduled
+        env:
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+
+      - name: Upload artifacts (backup téléchargeable)
+        uses: actions/upload-artifact@v4
+        with:
+          name: deribit-btc-options-${{ github.run_id }}
+          path: |
+            data/github/raw/**/*.json
+            data/github/cleaned/*.csv
+            data/github/logs/last_run.json
+          retention-days: 90
+          if-no-files-found: error
+
+      - name: Commit snapshots to repository
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/github/
+          if git diff --staged --quiet; then
+            echo "Aucun changement à committer."
+            exit 0
+          fi
+          git commit -m "chore(data): snapshot Deribit BTC options $(date -u +%Y-%m-%d)"
+          git push
