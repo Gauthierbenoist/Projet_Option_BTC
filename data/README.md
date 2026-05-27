@@ -6,17 +6,17 @@ Architecture **ETL** de niveau quant / data engineering : collecte, validation, 
 
 ```
 data/
-├── raw/              # JSON bruts par date (source de vérité, rejeu possible)
+├── raw/              # JSON bruts par date (local + GitHub Actions)
 │   └── YYYY-MM-DD/
 │       └── btc_options_YYYY-MM-DD.json
 ├── cleaned/          # CSV propres (une ligne = un instrument au snapshot)
 │   └── btc_options_YYYY-MM-DD.csv
+├── logs/             # last_run.json (statut) ; *.log ignorés par git
 ├── scripts/          # CLI, SQL, exemples cron / Airflow
 │   ├── run_daily_pipeline.py
 │   ├── init_db.sql
 │   ├── cron.example
 │   └── airflow_dag.example.py
-└── logs/             # logs pipeline (gitignored)
 ```
 
 Code métier : `src/data/deribit/` (modules testables, séparés des scripts).
@@ -96,30 +96,6 @@ ORDER BY maturity_date, strike;
 
 **Par défaut, rien ne tourne tout seul** tant que vous n’avez pas installé le planificateur (une seule fois).
 
-### Windows (recommandé sur votre machine)
-
-```powershell
-# Depuis la racine du projet, avec venv + dépendances installés
-pip install -r requirements.txt
-.\data\scripts\install_windows_scheduler.ps1
-```
-
-Cela crée la tâche **`DeribitBTCOptionsDaily`** (défaut : chaque jour à **00:15**, heure locale). Elle exécute `run_daily.bat` → API Deribit → `data/raw/` → `data/cleaned/` → PostgreSQL (si `.env` configuré).
-
-```powershell
-# Test immédiat
-Start-ScheduledTask -TaskName DeribitBTCOptionsDaily
-
-# Vérifier le dernier run
-Get-Content data\logs\last_run.json
-Get-Content data\logs\scheduler.log -Tail 20
-
-# Désinstaller
-.\data\scripts\install_windows_scheduler.ps1 -Uninstall
-```
-
-Horaire personnalisé : `.\data\scripts\install_windows_scheduler.ps1 -Time "06:30"` ou variables `PIPELINE_SCHEDULE_HOUR` / `PIPELINE_SCHEDULE_MINUTE` dans `.env`.
-
 ### Linux / macOS
 
 ```bash
@@ -131,7 +107,7 @@ bash data/scripts/install_linux_cron.sh
 Le workflow [`.github/workflows/deribit_daily.yml`](../.github/workflows/deribit_daily.yml) tourne **sur les serveurs GitHub** chaque jour à **00:15 UTC** :
 
 1. Télécharge les options BTC Deribit
-2. Sauvegarde dans `data/github/` (versionné sur le dépôt)
+2. Sauvegarde dans `data/raw/` et `data/cleaned/` (versionné sur le dépôt)
 3. Pousse un commit automatique + artefact téléchargeable (90 jours)
 
 **Activation** : poussez le dépôt sur GitHub (`main`). Le cron démarre automatiquement.

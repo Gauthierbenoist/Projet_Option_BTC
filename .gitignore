@@ -64,18 +64,13 @@ venv.bak/
 .DS_Store
 Thumbs.db
 
-# Logs
+# Logs (fichiers temporaires seulement — last_run.json est versionné par GitHub Actions)
 *.log
 logs/
 data/logs/*.log
-data/logs/last_run.json
 
-# Données Deribit locales (volumineuses — conserver la structure via .gitkeep)
-data/raw/**/*.json
-data/cleaned/*.csv
+# Autres CSV volumineux hors pipeline Deribit
 data/fomc_statements_*.csv
-!data/raw/.gitkeep
-!data/cleaned/.gitkeep
 
 # Historique local / RDS (ne pas versionner)
 src/data/*.csv

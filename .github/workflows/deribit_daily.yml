@@ -19,9 +19,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
-    env:
-      DERIBIT_DATA_DIR: ${{ github.workspace }}/data/github
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -54,9 +51,9 @@ jobs:
         with:
           name: deribit-btc-options-${{ github.run_id }}
           path: |
-            data/github/raw/**/*.json
-            data/github/cleaned/*.csv
-            data/github/logs/last_run.json
+            data/raw/**/*.json
+            data/cleaned/*.csv
+            data/logs/last_run.json
           retention-days: 90
           if-no-files-found: error
 
@@ -64,7 +61,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/github/
+          git add data/raw/ data/cleaned/ data/logs/last_run.json
           if git diff --staged --quiet; then
             echo "Aucun changement à committer."
             exit 0

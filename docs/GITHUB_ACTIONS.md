@@ -6,18 +6,12 @@
 - **Horaire** : `15 0 * * *` → 00:15 UTC chaque jour
 - **Déclenchement manuel** : Actions → Deribit BTC Options Daily → Run workflow
 - **Sorties** :
-  - Commit automatique dans `data/github/raw/` et `data/github/cleaned/`
+  - Commit automatique dans `data/raw/` et `data/cleaned/`
   - Artefact ZIP conservé 90 jours (onglet Actions → run → Artifacts)
 
 ## Mise en place (une fois)
 
-```bash
-git add .github/workflows/deribit_daily.yml data/github/
-git commit -m "ci: pipeline Deribit quotidienne sur GitHub Actions"
-git push origin main
-```
-
-Vérifiez que les **Actions** sont activées sur le dépôt GitHub (*Settings → Actions → General → Allow all actions*).
+Le workflow est déjà sur `main`. Vérifiez que les **Actions** sont activées (*Settings → Actions → General → Allow all actions*).
 
 ## Coûts
 

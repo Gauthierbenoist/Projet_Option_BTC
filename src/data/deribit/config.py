@@ -11,8 +11,7 @@ from dotenv import load_dotenv
 
 # Racine projet = parent de src/
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
-# GitHub Actions : DERIBIT_DATA_DIR=data/github (données versionnées)
-DATA_DIR = Path(os.getenv("DERIBIT_DATA_DIR", PROJECT_ROOT / "data"))
+DATA_DIR = PROJECT_ROOT / "data"
 
 load_dotenv(PROJECT_ROOT / ".env")
 
