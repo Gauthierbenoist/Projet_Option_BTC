@@ -124,6 +124,6 @@ Sans ces secrets, seuls JSON + CSV sont produits (suffisant pour la plupart des 
 - PostgreSQL : ignoré si `PIPELINE_SKIP_DB=1` ou mot de passe absent / `changeme`.
 - Si Postgres est configuré mais injoignable, l’échec SQL **ne fait pas échouer** la tâche (log + `last_run.json`).
 
-## Lien avec l'existant
+## Périmètre du dépôt
 
-Les anciens fichiers `src/data/deribit_options.csv` et `Nettoyage_data_csv.py` restent pour l'historique trades RDS. La nouvelle pipeline cible les **snapshots de marché** (book summary), adaptés au monitoring quotidien et à la base SQL.
+Ce dépôt est orienté **data engineering uniquement** : ingestion Deribit, qualité des données, export CSV et stockage PostgreSQL.

@@ -32,12 +32,7 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run ETL (sans PostgreSQL)
-        if: ${{ secrets.POSTGRES_PASSWORD == '' }}
-        run: python data/scripts/run_daily_pipeline.py --scheduled --skip-db
-
-      - name: Run ETL (avec PostgreSQL)
-        if: ${{ secrets.POSTGRES_PASSWORD != '' }}
+      - name: Run ETL pipeline
         run: python data/scripts/run_daily_pipeline.py --scheduled
         env:
           POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
