@@ -12,11 +12,9 @@ data/
 ├── cleaned/          # CSV propres (une ligne = un instrument au snapshot)
 │   └── btc_options_YYYY-MM-DD.csv
 ├── logs/             # last_run.json (statut) ; *.log ignorés par git
-├── scripts/          # CLI, SQL, exemples cron / Airflow
+├── scripts/          # CLI et SQL d'initialisation
 │   ├── run_daily_pipeline.py
-│   ├── init_db.sql
-│   ├── cron.example
-│   └── airflow_dag.example.py
+│   └── init_db.sql
 ```
 
 Code métier : `src/data/deribit/` (modules testables, séparés des scripts).
@@ -68,8 +66,8 @@ python data/scripts/run_daily_pipeline.py --skip-fetch --date 2025-05-21
 | **Écriture atomique** | JSON écrit en `.tmp` puis rename (pas de fichier corrompu). |
 | **Logs structurés** | Fichier par date + stdout ; traçabilité des étapes et stats de filtrage. |
 | **Retries API** | Backoff exponentiel sur erreurs réseau. |
-| **Modules vs scripts** | Logique dans `src/`, `data/scripts/` = fine couche CLI (cron/Airflow). |
-| **Préparation orchestration** | Exemples `cron.example` et `airflow_dag.example.py` sans coupler le code à Airflow. |
+| **Modules vs scripts** | Logique dans `src/`, `data/scripts/` = fine couche CLI + SQL d'init. |
+| **Orchestration centralisée** | Planification unique via GitHub Actions pour éviter les doublons d'automatisation. |
 
 ## Règles de nettoyage (configurables)
 
@@ -96,12 +94,6 @@ ORDER BY maturity_date, strike;
 
 **Par défaut, rien ne tourne tout seul** tant que vous n’avez pas installé le planificateur (une seule fois).
 
-### Linux / macOS
-
-```bash
-bash data/scripts/install_linux_cron.sh
-```
-
 ### GitHub Actions (PC éteint — recommandé)
 
 Le workflow [`.github/workflows/deribit_daily.yml`](../.github/workflows/deribit_daily.yml) tourne **sur les serveurs GitHub** chaque jour à **00:15 UTC** :
@@ -125,10 +117,6 @@ Le workflow [`.github/workflows/deribit_daily.yml`](../.github/workflows/deribit
 | `POSTGRES_PASSWORD` | `***` |
 
 Sans ces secrets, seuls JSON + CSV sont produits (suffisant pour la plupart des usages).
-
-### Production (Airflow)
-
-Voir `data/scripts/airflow_dag.example.py` pour un déploiement serveur.
 
 ### Comportement mode `--scheduled`
 
