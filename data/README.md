@@ -106,17 +106,10 @@ Le workflow [`.github/workflows/deribit_daily.yml`](../.github/workflows/deribit
 
 **Lancer tout de suite** : onglet *Actions* → *Deribit BTC Options Daily* → *Run workflow*.
 
-**PostgreSQL cloud (optionnel)** — secrets du dépôt (*Settings → Secrets → Actions*) :
+**PostgreSQL Neon (automatisation SQL)** — voir [docs/NEON_SETUP.md](../docs/NEON_SETUP.md) :
 
-| Secret | Exemple |
-|--------|---------|
-| `POSTGRES_HOST` | `xxx.postgres.database.azure.com` |
-| `POSTGRES_PORT` | `5432` |
-| `POSTGRES_DB` | `deribit_quant` |
-| `POSTGRES_USER` | `admin` |
-| `POSTGRES_PASSWORD` | `***` |
-
-Sans ces secrets, seuls JSON + CSV sont produits (suffisant pour la plupart des usages).
+- Secret GitHub recommandé : `DATABASE_URL` (connection string Neon avec `sslmode=require`)
+- Sans `DATABASE_URL` / mot de passe valide : JSON + CSV seulement
 
 ### Comportement mode `--scheduled`
 

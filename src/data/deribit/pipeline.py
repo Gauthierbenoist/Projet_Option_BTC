@@ -24,7 +24,7 @@ class PipelineError(Exception):
 def _should_skip_db(skip_db: bool) -> bool:
     if skip_db or SCHEDULE.skip_db:
         return True
-    return not POSTGRES.password or POSTGRES.password == "changeme"
+    return not POSTGRES.is_configured
 
 
 def run_daily_pipeline(

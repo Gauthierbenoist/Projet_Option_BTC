@@ -48,6 +48,8 @@ CREATE INDEX IF NOT EXISTS idx_btc_options_strike_type ON btc_options (strike, o
 def get_connection():
     import psycopg2
 
+    if POSTGRES.database_url:
+        return psycopg2.connect(POSTGRES.database_url)
     return psycopg2.connect(POSTGRES.dsn)
 
 

@@ -51,19 +51,29 @@ class CleanConfig:
 
 @dataclass(frozen=True)
 class PostgresConfig:
+    """Neon : préférer DATABASE_URL (avec ?sslmode=require) depuis le dashboard."""
+
+    database_url: str = os.getenv("DATABASE_URL", "")
     host: str = os.getenv("POSTGRES_HOST", "localhost")
     port: int = int(os.getenv("POSTGRES_PORT", "5432"))
     db: str = os.getenv("POSTGRES_DB", "deribit_quant")
     user: str = os.getenv("POSTGRES_USER", "postgres")
     password: str = os.getenv("POSTGRES_PASSWORD", "")
+    sslmode: str = os.getenv("POSTGRES_SSLMODE", "prefer")
     schema: str = os.getenv("POSTGRES_SCHEMA", "public")
 
     @property
     def dsn(self) -> str:
         return (
             f"host={self.host} port={self.port} dbname={self.db} "
-            f"user={self.user} password={self.password}"
+            f"user={self.user} password={self.password} sslmode={self.sslmode}"
         )
+
+    @property
+    def is_configured(self) -> bool:
+        if self.database_url:
+            return True
+        return bool(self.password and self.password != "changeme")
 
 
 def _env_bool(name: str, default: bool = False) -> bool:
