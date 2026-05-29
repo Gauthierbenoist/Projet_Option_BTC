@@ -57,14 +57,11 @@ jobs:
           if-no-files-found: warn
 
       - name: Commit snapshots to repository
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git pull --rebase origin main
-          git add data/raw/ data/cleaned/ data/logs/last_run.json
-          if git diff --staged --quiet; then
-            echo "Aucun changement à committer."
-            exit 0
-          fi
-          git commit -m "chore(data): snapshot Deribit BTC options $(date -u +%Y-%m-%d)"
-          git push origin main
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore(data): snapshot Deribit BTC options ${{ github.run_id }}"
+          file_pattern: |
+            data/raw/**
+            data/cleaned/**
+            data/logs/last_run.json
+          branch: main

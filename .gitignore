@@ -64,9 +64,7 @@ venv.bak/
 .DS_Store
 Thumbs.db
 
-# Logs (fichiers temporaires seulement — last_run.json est versionné par GitHub Actions)
-*.log
-logs/
+# Logs (fichiers temporaires seulement — last_run.json reste versionné)
 data/logs/*.log
 
 # Autres CSV volumineux hors pipeline Deribit
