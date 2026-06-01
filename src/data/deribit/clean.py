@@ -117,7 +117,7 @@ def clean_options(df: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, int]]:
 
 
 def to_clean_schema(df: pd.DataFrame, snapshot: datetime | None = None) -> pd.DataFrame:
-    """Colonnes normalisées pour CSV et PostgreSQL."""
+    """Colonnes normalisées pour PostgreSQL."""
     snap = snapshot or datetime.now(timezone.utc)
     snapshot_date = snap.date() if hasattr(snap, "date") else pd.Timestamp(snap).date()
 

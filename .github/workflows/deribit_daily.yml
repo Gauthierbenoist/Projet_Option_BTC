@@ -46,7 +46,6 @@ jobs:
           name: deribit-btc-options-${{ github.run_id }}
           path: |
             data/raw/**/*.json
-            data/cleaned/*.csv
             data/logs/last_run.json
           retention-days: 90
           if-no-files-found: warn
@@ -57,7 +56,7 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore(data): snapshot Deribit BTC options $(date -u +%Y-%m-%d)"
-          file_pattern: "data/raw/* data/cleaned/* data/logs/last_run.json"
+          file_pattern: "data/raw/* data/logs/last_run.json"
           branch: main
           push_options: "--force-with-lease"
 

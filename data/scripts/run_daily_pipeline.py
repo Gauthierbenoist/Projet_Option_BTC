@@ -27,7 +27,7 @@ def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Pipeline ETL Deribit BTC options")
     p.add_argument("--date", type=str, help="Date snapshot YYYY-MM-DD (défaut: aujourd'hui UTC)")
     p.add_argument("--skip-fetch", action="store_true", help="Relire le JSON raw existant")
-    p.add_argument("--skip-db", action="store_true", help="Ne pas écrire en PostgreSQL")
+    p.add_argument("--skip-db", action="store_true", help="Ne pas écrire en PostgreSQL (JSON raw seulement)")
     p.add_argument("--raw", type=str, help="Chemin JSON raw (avec --skip-fetch)")
     p.add_argument(
         "--scheduled",

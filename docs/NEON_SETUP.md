@@ -53,8 +53,8 @@ SELECT snapshot_date, COUNT(*) FROM btc_options GROUP BY snapshot_date ORDER BY 
 Ajoute le secret **`DATABASE_URL`** dans  
 `Settings → Secrets and variables → Actions`.
 
-Le workflow poussera alors chaque jour :
-- JSON/CSV dans le repo
+Le workflow poussera chaque jour :
+- JSON raw dans le repo (`data/raw/`)
 - lignes dans Neon (`btc_options`)
 
 ## Sécurité

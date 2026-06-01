@@ -67,6 +67,9 @@ Thumbs.db
 # Logs (fichiers temporaires seulement — last_run.json reste versionné)
 data/logs/*.log
 
+# Ancien dossier CSV (pipeline sans export CSV)
+data/cleaned/
+
 # Autres CSV volumineux hors pipeline Deribit
 data/fomc_statements_*.csv
 

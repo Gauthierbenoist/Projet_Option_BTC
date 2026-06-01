@@ -19,15 +19,11 @@ load_dotenv(PROJECT_ROOT / ".env")
 @dataclass(frozen=True)
 class Paths:
     raw: Path = DATA_DIR / "raw"
-    cleaned: Path = DATA_DIR / "cleaned"
     scripts: Path = DATA_DIR / "scripts"
     logs: Path = DATA_DIR / "logs"
 
     def raw_file(self, snapshot: date) -> Path:
         return self.raw / snapshot.isoformat() / f"btc_options_{snapshot.isoformat()}.json"
-
-    def cleaned_csv(self, snapshot: date) -> Path:
-        return self.cleaned / f"btc_options_{snapshot.isoformat()}.csv"
 
 
 @dataclass(frozen=True)

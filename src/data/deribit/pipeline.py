@@ -10,7 +10,6 @@ from src.data.deribit.clean import clean_options, raw_to_dataframe, to_clean_sch
 from src.data.deribit.client import DeribitAPIError, DeribitClient
 from src.data.deribit.config import PATHS, POSTGRES, SCHEDULE
 from src.data.deribit.schedule_status import write_last_run
-from src.data.deribit.export import export_clean_csv
 from src.data.deribit.fetch import fetch_active_btc_options, load_raw_json, save_raw_json
 from src.data.deribit.logging_setup import setup_logging
 
@@ -38,12 +37,11 @@ def run_daily_pipeline(
     """
     Exécute la pipeline complète pour une date (UTC).
 
-    Étapes : fetch → raw JSON → clean → CSV → PostgreSQL
+    Étapes : fetch → raw JSON → clean → PostgreSQL
     """
     snapshot = snapshot or datetime.now(timezone.utc).date()
     setup_logging(PATHS.logs, snapshot)
     PATHS.raw.mkdir(parents=True, exist_ok=True)
-    PATHS.cleaned.mkdir(parents=True, exist_ok=True)
 
     report: dict = {"snapshot": snapshot.isoformat(), "steps": {}}
 
@@ -68,8 +66,6 @@ def run_daily_pipeline(
         snapshot_utc = _snapshot_datetime(payload)
         df_out = to_clean_schema(df_clean, snapshot_utc)
 
-        csv_path = export_clean_csv(df_out, snapshot)
-        report["steps"]["csv"] = str(csv_path)
         report["clean_stats"] = clean_stats
         report["rows"] = len(df_out)
 
