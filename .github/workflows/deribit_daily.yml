@@ -50,6 +50,12 @@ jobs:
           retention-days: 90
           if-no-files-found: warn
 
+      - name: Remove legacy cleaned CSV folder
+        run: |
+          if [ -d data/cleaned ]; then
+            git rm -rf data/cleaned 2>/dev/null || rm -rf data/cleaned
+          fi
+
       - name: Commit snapshots to repository
         id: commit
         continue-on-error: true
