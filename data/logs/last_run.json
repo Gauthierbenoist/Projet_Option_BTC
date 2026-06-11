@@ -1,23 +1,23 @@
 {
   "success": true,
-  "finished_at_utc": "2026-06-10T04:56:27.039428+00:00",
+  "finished_at_utc": "2026-06-11T05:01:05.497110+00:00",
   "error": null,
   "report": {
-    "snapshot": "2026-06-10",
+    "snapshot": "2026-06-11",
     "steps": {
-      "fetch": "/home/runner/work/Projet_Option_BTC/Projet_Option_BTC/data/raw/2026-06-10/btc_options_2026-06-10.json",
-      "postgres": "failed: connection to server at \"ep-super-band-abmxf1yd-pooler.eu-west-2.aws.neon.tech\" (13.43.29.36), port 5432 failed: Connection timed out\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"ep-super-band-abmxf1yd-pooler.eu-west-2.aws.neon.tech\" (35.177.127.187), port 5432 failed: Connection timed out\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"ep-super-band-abmxf1yd-pooler.eu-west-2.aws.neon.tech\" (13.41.250.251), port 5432 failed: Connection timed out\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"ep-super-band-abmxf1yd-pooler.eu-west-2.aws.neon.tech\" (2a05:d01c:c65:280c:ad0b:9757:1116:bcab), port 5432 failed: Network is unreachable\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"ep-super-band-abmxf1yd-pooler.eu-west-2.aws.neon.tech\" (2a05:d01c:c65:281b:bcfb:93a:daab:e0ce), port 5432 failed: Network is unreachable\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"ep-super-band-abmxf1yd-pooler.eu-west-2.aws.neon.tech\" (2a05:d01c:c65:2824:4bbb:d4f1:a71e:2c1f), port 5432 failed: Network is unreachable\n\tIs the server running on that host and accepting TCP/IP connections?\n"
+      "fetch": "/home/runner/work/Projet_Option_BTC/Projet_Option_BTC/data/raw/2026-06-11/btc_options_2026-06-11.json",
+      "postgres": 733
     },
     "clean_stats": {
-      "initial": 958,
+      "initial": 956,
       "dropped_nan_required": 0,
       "dropped_expired_or_near": 46,
-      "dropped_illiquid_oi": 123,
+      "dropped_illiquid_oi": 119,
       "dropped_bid_ask_incoherent": 0,
-      "dropped_wide_spread": 43,
+      "dropped_wide_spread": 58,
       "dropped_iv_aberrant": 0,
-      "final": 746
+      "final": 733
     },
-    "rows": 746
+    "rows": 733
   }
 }
