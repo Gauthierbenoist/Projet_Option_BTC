@@ -1,23 +1,23 @@
 {
   "success": true,
-  "finished_at_utc": "2026-07-31T03:51:30.361719+00:00",
+  "finished_at_utc": "2026-08-01T03:51:42.394854+00:00",
   "error": null,
   "report": {
-    "snapshot": "2026-07-31",
+    "snapshot": "2026-08-01",
     "steps": {
-      "fetch": "/home/runner/work/Projet_Option_BTC/Projet_Option_BTC/data/raw/2026-07-31/btc_options_2026-07-31.json",
-      "postgres": 631
+      "fetch": "/home/runner/work/Projet_Option_BTC/Projet_Option_BTC/data/raw/2026-08-01/btc_options_2026-08-01.json",
+      "postgres": 634
     },
     "clean_stats": {
-      "initial": 940,
+      "initial": 870,
       "dropped_nan_required": 0,
-      "dropped_expired_or_near": 128,
-      "dropped_illiquid_oi": 133,
+      "dropped_expired_or_near": 44,
+      "dropped_illiquid_oi": 123,
       "dropped_bid_ask_incoherent": 0,
-      "dropped_wide_spread": 48,
+      "dropped_wide_spread": 69,
       "dropped_iv_aberrant": 0,
-      "final": 631
+      "final": 634
     },
-    "rows": 631
+    "rows": 634
   }
 }
